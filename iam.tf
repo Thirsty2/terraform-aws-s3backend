@@ -15,6 +15,10 @@ resource "aws_iam_role" "iam_role" {
       ]
     }
   EOF
+
+  tags {
+    ResourceGroup = var.namespace 
+  }
 }
 
 data "aws_iam_policy_document" "policy_doc" {
@@ -50,6 +54,9 @@ resource "aws_iam_policy" "iam_policy" {
   name = "tf-policy"
   path = "/"
   policy = data.aws_iam_policy_document.policy_doc.json
+  tags {
+    ResourceGroup = var.namespace 
+  }
 }
 
 resource "aws_iam_role_policy_attachment" "policy_attach" {

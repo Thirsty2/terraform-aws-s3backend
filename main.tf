@@ -1,15 +1,39 @@
 data "aws_region" "current" {}
 
+resource "aws_resourcegroups_group" "test" {
+  name = "${var.namespace}-group"
+
+  resource_query {
+    query = <<- JSON
+{
+  "ResourceTypeFilters": [
+    "AWS::EC2::Instance"
+  ],
+  "TagFilters": [
+    {
+      "Key": "Namespace",
+      "Values": ["${var.namespace}"]
+    }
+  ]
+}
+  JSON
+  }
+}
+
 resource "random_string" "rand" {
   length  = 8
   special = false
   upper   = false
 }
 
-resource "aws_kms_key" "kms_key" {}
+resource "aws_kms_key" "kms_key" {
+  tags {
+    Namespace = var.namespace 
+  }
+}
 
 resource "aws_s3_bucket" "s3_bucket" {
-  bucket = "s3-remote-state-storage-${random_string.rand.result}"
+  bucket = "${var.namespace}-state-bucket-${random_string.rand.result}"
 
   versioning {
     enabled = true
@@ -23,14 +47,20 @@ resource "aws_s3_bucket" "s3_bucket" {
       }
     }
   }
+  tags {
+    Namespace = var.namespace 
+  }
 }
 
 resource "aws_dynamodb_table" "dynamodb_table" {
-  name         = "s3-remote-state-lock"
+  name         = "${var.namespace}-state-lock"
   hash_key     = "LockID"
   billing_mode = "PAY_PER_REQUEST"
   attribute {
     name = "LockID"
     type = "S"
+  }
+  tags {
+    Namespace = var.namespace 
   }
 }

@@ -8,7 +8,7 @@ resource "aws_iam_role" "iam_role" {
         {
           "Action": "sts:AssumeRole",
           "Principal": {
-              "AWS": "${var.account_id}"
+              "AWS": "${var.assume_role_account_id}"
           },
           "Effect": "Allow"
         }
@@ -16,7 +16,7 @@ resource "aws_iam_role" "iam_role" {
     }
   EOF
 
-  tags {
+  tags = {
     ResourceGroup = var.namespace 
   }
 }
@@ -54,9 +54,6 @@ resource "aws_iam_policy" "iam_policy" {
   name = "tf-policy"
   path = "/"
   policy = data.aws_iam_policy_document.policy_doc.json
-  tags {
-    ResourceGroup = var.namespace 
-  }
 }
 
 resource "aws_iam_role_policy_attachment" "policy_attach" {

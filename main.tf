@@ -1,5 +1,3 @@
-data "aws_region" "current" {}
-
 resource "aws_resourcegroups_group" "test" {
   name = "${var.namespace}-group"
 

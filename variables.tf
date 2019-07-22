@@ -6,6 +6,7 @@ variable "namespace" {
 
 variable "principal_arn" {
   description = "AWS principal arn allowed to assume the IAM role"
+  default     = null
   type        = string
 }
 

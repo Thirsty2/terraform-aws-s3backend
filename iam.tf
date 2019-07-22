@@ -1,3 +1,9 @@
+data "aws_region" "current" {}
+
+locals {
+  principal_arn = var.principal_arn != null ? var.principal_arn : data.aws_caller_identity.current.arn
+}
+
 resource "aws_iam_role" "iam_role" {
   name = "tf-assume-role"
 
@@ -8,7 +14,7 @@ resource "aws_iam_role" "iam_role" {
         {
           "Action": "sts:AssumeRole",
           "Principal": {
-              "AWS": "${var.principal_arn}"
+              "AWS": "${local.principal_arn}"
           },
           "Effect": "Allow"
         }

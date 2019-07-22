@@ -18,6 +18,8 @@ resource "aws_resourcegroups_group" "test" {
   }
 }
 
+data "aws_region" "current" {}
+
 resource "random_string" "rand" {
   length  = 8
   special = false

@@ -1,4 +1,4 @@
-data "aws_region" "current" {}
+data "aws_caller_identity" "current" {}
 
 locals {
   principal_arn = var.principal_arn != null ? var.principal_arn : data.aws_caller_identity.current.arn

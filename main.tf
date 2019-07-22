@@ -38,7 +38,7 @@ resource "aws_s3_bucket" "s3_bucket" {
   versioning {
     enabled = true
   }
-  force_destroy = var.force_destroy_s3
+  force_destroy = var.force_destroy_state
   server_side_encryption_configuration {
     rule {
       apply_server_side_encryption_by_default {

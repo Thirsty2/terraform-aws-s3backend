@@ -8,7 +8,7 @@ resource "aws_iam_role" "iam_role" {
         {
           "Action": "sts:AssumeRole",
           "Principal": {
-              "AWS": "${var.assume_role_account_id}"
+              "AWS": "${var.principal_arn}"
           },
           "Effect": "Allow"
         }

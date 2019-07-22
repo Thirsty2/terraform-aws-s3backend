@@ -4,13 +4,13 @@ variable "namespace" {
   type        = string
 }
 
-variable "assume_role_account_id" {
-  description = "AWS account id that can assume role"
+variable "principal_arn" {
+  description = "AWS principal arn allowed to assume the IAM role"
   type        = string
 }
 
-variable "force_destroy_s3" {
-  description = "Force destroy s3 bucket?"
+variable "force_destroy_state" {
+  description = "Force destroy the s3 bucket containing state files?"
   default     = true
   type        = bool
 }

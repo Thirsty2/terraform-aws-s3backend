@@ -5,8 +5,8 @@ locals {
 }
 
 resource "aws_iam_role" "iam_role" {
-  name = "${var.namespace}-tf-assume-role"
-  force_detach_policies = true
+  name = "${local.namespace}-tf-assume-role"
+
   assume_role_policy = <<-EOF
     {
       "Version": "2012-10-17",
@@ -23,7 +23,7 @@ resource "aws_iam_role" "iam_role" {
   EOF
 
   tags = {
-    ResourceGroup = var.namespace 
+    ResourceGroup = local.namespace 
   }
 }
 
@@ -57,7 +57,7 @@ data "aws_iam_policy_document" "policy_doc" {
 }
 
 resource "aws_iam_policy" "iam_policy" {
-  name = "${var.namespace}-tf-policy"
+  name = "${local.namespace}-tf-policy"
   path = "/"
   policy = data.aws_iam_policy_document.policy_doc.json
 }

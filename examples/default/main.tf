@@ -4,5 +4,5 @@ provider "aws" {
 
 module "s3backend" {
   source    = "../../"
-  namespace = "play"
+  namespace = "default"
 }
